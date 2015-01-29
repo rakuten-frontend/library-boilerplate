@@ -27,6 +27,34 @@ module.exports = function (grunt) {
       }
     },
 
+    mocha: {
+      options: {
+        reporter: 'Spec',
+        run: true
+      },
+      test: {
+        options: {
+          urls: ['http://localhost:<%= connect.test.options.port %>/']
+        }
+      }
+    },
+
+    connect: {
+      test: {
+        options: {
+          port: 9001,
+          open: false,
+          middleware: function (connect) {
+            return [
+              connect.static('test'),
+              connect().use('/bower_components', connect.static('bower_components')),
+              connect.static('src')
+            ];
+          }
+        }
+      }
+    },
+
     clean: {
       dist: ['dist']
     },
@@ -58,7 +86,7 @@ module.exports = function (grunt) {
 
   });
 
-  grunt.registerTask('test', ['jscs', 'jshint']);
+  grunt.registerTask('test', ['jscs', 'jshint', 'connect:test', 'mocha']);
   grunt.registerTask('build', ['clean', 'concat', 'uglify']);
   grunt.registerTask('default', ['test', 'build']);
 
