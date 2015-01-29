@@ -12,21 +12,24 @@ module.exports = function (grunt) {
       dist: ['dist']
     },
 
-    copy: {
+    concat: {
       dist: {
-        files: [{
-          expand: true,
-          cwd: 'src',
-          dest: 'dist',
-          src: ['**']
-        }]
+        options: {
+          banner: '/*! <%= pkg.name %> v<%= pkg.version %>' +
+            ' - (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>' +
+            ' - <%= pkg.license.type %>' +
+            ' */\n'
+        },
+        src: ['src/<%= pkg.name %>.js'],
+        dest: 'dist/<%= pkg.name %>.js'
       }
     },
 
     uglify: {
       dist: {
         options: {
-          sourceMap: true
+          sourceMap: true,
+          preserveComments: 'some'
         },
         files: {
           'dist/<%= pkg.name %>.min.js': ['dist/<%= pkg.name %>.js']
@@ -37,7 +40,7 @@ module.exports = function (grunt) {
   });
 
   grunt.registerTask('test', []);
-  grunt.registerTask('build', ['clean', 'copy', 'uglify']);
+  grunt.registerTask('build', ['clean', 'concat', 'uglify']);
   grunt.registerTask('default', ['test', 'build']);
 
 };
