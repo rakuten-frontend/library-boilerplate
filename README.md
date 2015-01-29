@@ -26,7 +26,7 @@ $ bower install library-name
 Library will be installed in the `./bower_components/library-name` folder.
 
 ## License
-Copyright (c) 2015 Author Name. Licensed under the [License Type](LICENSE).
+Copyright (c) YYYY Author Name. Licensed under the [License Type](LICENSE).
 
 [npm-image]: https://img.shields.io/npm/v/library-name.svg?style=flat
 [npm-url]: https://www.npmjs.com/package/library-name

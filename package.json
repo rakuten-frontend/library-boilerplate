@@ -24,9 +24,12 @@
   "scripts": {
     "test": "grunt test"
   },
-  "main": "app/index.js",
+  "main": "dist/library-name.js",
   "files": [
-    "LICENSE"
+    "src",
+    "dist",
+    "LICENSE",
+    "CHANGELOG"
   ],
   "dependencies": {},
   "devDependencies": {

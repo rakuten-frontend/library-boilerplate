@@ -1,14 +1,16 @@
 {
   "name": "library-name",
   "version": "0.0.0",
-  "homepage": "https://github.com/user-name/library-name",
+  "description": "Library description here",
   "authors": [
     "Author Name"
   ],
-  "description": "Library description here",
-  "main": "dist/library-name.css",
-  "keywords": [],
   "license": "License Type",
+  "homepage": "https://github.com/user-name/library-name",
+  "keywords": [],
+  "main": [
+    "dist/library-name.js"
+  ],
   "ignore": [
     "**/.*",
     "node_modules",
