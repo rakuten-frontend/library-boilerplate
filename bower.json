@@ -1,0 +1,19 @@
+{
+  "name": "library-name",
+  "version": "0.0.0",
+  "homepage": "https://github.com/user-name/library-name",
+  "authors": [
+    "Author Name"
+  ],
+  "description": "Library description here",
+  "main": "dist/library-name.css",
+  "keywords": [],
+  "license": "License Type",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "package.json",
+    "Gruntfile.js"
+  ]
+}

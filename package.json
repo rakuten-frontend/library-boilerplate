@@ -1,0 +1,38 @@
+{
+  "name": "library-name",
+  "version": "0.0.0",
+  "description": "Library description here",
+  "author": {
+    "name": "Author Name"
+  },
+  "licenses": [
+    {
+      "type": "License Type",
+      "url": "https://github.com/user-name/library-name/blob/master/LICENSE"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/user-name/library-name.git"
+  },
+  "homepage": "https://github.com/user-name/library-name",
+  "bugs": {
+    "url": "https://github.com/user-name/library-name/issues"
+  },
+  "keywords": [],
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "scripts": {
+    "test": "grunt test"
+  },
+  "main": "app/index.js",
+  "files": [
+    "LICENSE"
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "load-grunt-tasks": "^3.0.0"
+  }
+}
