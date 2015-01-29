@@ -1,3 +1,4 @@
+/* jshint node:true */
 'use strict';
 
 module.exports = function (grunt) {
@@ -7,6 +8,15 @@ module.exports = function (grunt) {
   grunt.initConfig({
 
     pkg: grunt.file.readJSON('package.json'),
+
+    jshint: {
+      src: {
+        options: {
+          jshintrc: '.jshintrc'
+        },
+        src: ['Gruntfile.js', 'src/**/*.js']
+      }
+    },
 
     clean: {
       dist: ['dist']
@@ -39,7 +49,7 @@ module.exports = function (grunt) {
 
   });
 
-  grunt.registerTask('test', []);
+  grunt.registerTask('test', ['jshint']);
   grunt.registerTask('build', ['clean', 'concat', 'uglify']);
   grunt.registerTask('default', ['test', 'build']);
 
