@@ -1,0 +1,15 @@
+{
+  "preset": "google",
+  "requireSpacesInFunctionExpression": {
+    "beforeOpeningRoundBrace": true,
+    "beforeOpeningCurlyBrace": true
+  },
+  "requireSpacesInAnonymousFunctionExpression": {
+    "beforeOpeningRoundBrace": true,
+    "beforeOpeningCurlyBrace": true
+  },
+  "disallowSpacesInAnonymousFunctionExpression": null,
+  "disallowKeywordsOnNewLine": [],
+  "maximumLineLength": null,
+  "validateLineBreaks": "LF"
+}

@@ -9,6 +9,15 @@ module.exports = function (grunt) {
 
     pkg: grunt.file.readJSON('package.json'),
 
+    jscs: {
+      options: {
+        config: '.jscsrc'
+      },
+      src: {
+        src: ['Gruntfile.js', 'src/**/*.js']
+      }
+    },
+
     jshint: {
       src: {
         options: {
@@ -49,7 +58,7 @@ module.exports = function (grunt) {
 
   });
 
-  grunt.registerTask('test', ['jshint']);
+  grunt.registerTask('test', ['jscs', 'jshint']);
   grunt.registerTask('build', ['clean', 'concat', 'uglify']);
   grunt.registerTask('default', ['test', 'build']);
 
