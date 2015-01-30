@@ -9,7 +9,8 @@
   "homepage": "https://github.com/user-name/library-name",
   "keywords": [],
   "main": [
-    "dist/library-name.js"
+    "dist/library-name.js",
+    "dist/library-name.css"
   ],
   "ignore": [
     "**/.*",

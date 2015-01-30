@@ -60,15 +60,19 @@ module.exports = function (grunt) {
     },
 
     concat: {
-      dist: {
-        options: {
-          banner: '/*! <%= pkg.name %> v<%= pkg.version %>' +
-            ' - (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>' +
-            ' - <%= pkg.license.type %>' +
-            ' */\n'
-        },
+      options: {
+        banner: '/*! <%= pkg.name %> v<%= pkg.version %>' +
+          ' - (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>' +
+          ' - <%= pkg.license.type %>' +
+          ' */\n'
+      },
+      js: {
         src: ['src/<%= pkg.name %>.js'],
         dest: 'dist/<%= pkg.name %>.js'
+      },
+      css: {
+        src: ['src/<%= pkg.name %>.css'],
+        dest: 'dist/<%= pkg.name %>.css'
       }
     },
 
@@ -80,6 +84,17 @@ module.exports = function (grunt) {
         },
         files: {
           'dist/<%= pkg.name %>.min.js': ['dist/<%= pkg.name %>.js']
+        }
+      }
+    },
+
+    cssmin: {
+      dist: {
+        options: {
+          keepSpecialComments: '*'
+        },
+        files: {
+          'dist/<%= pkg.name %>.min.css': ['dist/<%= pkg.name %>.css']
         }
       }
     },
@@ -104,7 +119,7 @@ module.exports = function (grunt) {
   });
 
   grunt.registerTask('test', ['jscs', 'jshint', 'connect:test', 'mocha']);
-  grunt.registerTask('build', ['clean', 'concat', 'uglify']);
+  grunt.registerTask('build', ['clean', 'concat', 'uglify', 'cssmin']);
   grunt.registerTask('default', ['test', 'build']);
 
   grunt.registerTask('release', 'Test, build and bump package.', function (type) {
