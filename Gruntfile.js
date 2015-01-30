@@ -27,6 +27,15 @@ module.exports = function (grunt) {
       }
     },
 
+    csslint: {
+      options: {
+        csslintrc: '.csslintrc'
+      },
+      src: {
+        src: ['src/**/*.css']
+      }
+    },
+
     mocha: {
       options: {
         reporter: 'Spec',
@@ -118,7 +127,7 @@ module.exports = function (grunt) {
 
   });
 
-  grunt.registerTask('test', ['jscs', 'jshint', 'connect:test', 'mocha']);
+  grunt.registerTask('test', ['jscs', 'jshint', 'csslint', 'connect:test', 'mocha']);
   grunt.registerTask('build', ['clean', 'concat', 'uglify', 'cssmin']);
   grunt.registerTask('default', ['test', 'build']);
 
