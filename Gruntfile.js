@@ -85,6 +85,21 @@ module.exports = function (grunt) {
       }
     },
 
+    autoprefixer: {
+      options: {
+        browsers: [
+          '> 1%',
+          'last 2 versions',
+          'Firefox ESR',
+          'Opera 12.1'
+        ]
+      },
+      dist: {
+        src: ['dist/<%= pkg.name %>.css'],
+        dest: 'dist/<%= pkg.name %>.css'
+      }
+    },
+
     uglify: {
       dist: {
         options: {
@@ -128,7 +143,7 @@ module.exports = function (grunt) {
   });
 
   grunt.registerTask('test', ['jscs', 'jshint', 'csslint', 'connect:test', 'mocha']);
-  grunt.registerTask('build', ['clean', 'concat', 'uglify', 'cssmin']);
+  grunt.registerTask('build', ['clean', 'concat', 'autoprefixer', 'uglify', 'cssmin']);
   grunt.registerTask('default', ['test', 'build']);
 
   grunt.registerTask('release', 'Test, build and bump package.', function (type) {
