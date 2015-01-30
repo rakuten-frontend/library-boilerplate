@@ -14,7 +14,7 @@ module.exports = function (grunt) {
         config: '.jscsrc'
       },
       src: {
-        src: ['Gruntfile.js', 'src/**/*.js']
+        src: ['Gruntfile.js', 'src/**/*.js', 'test/spec/*.js']
       }
     },
 
@@ -23,7 +23,7 @@ module.exports = function (grunt) {
         jshintrc: '.jshintrc'
       },
       src: {
-        src: ['Gruntfile.js', 'src/**/*.js']
+        src: ['Gruntfile.js', 'src/**/*.js', 'test/spec/*.js']
       }
     },
 
