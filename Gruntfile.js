@@ -12,7 +12,7 @@ module.exports = function (grunt) {
     banner: '/*! <%= pkg.name %> v<%= pkg.version %>' +
       ' - (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>' +
       ' - <%= pkg.license.type %>' +
-      ' */\n',
+      ' */\n\n',
 
     sass: {
       options: {
