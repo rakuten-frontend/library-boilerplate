@@ -9,12 +9,30 @@ module.exports = function (grunt) {
 
     pkg: grunt.file.readJSON('package.json'),
 
+    banner: '/*! <%= pkg.name %> v<%= pkg.version %>' +
+      ' - (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>' +
+      ' - <%= pkg.license.type %>' +
+      ' */\n',
+
+    sass: {
+      options: {
+        style: 'expanded',
+        loadPath: ['bower_components'],
+        sourcemap: 'auto'
+      },
+      dist: {
+        files: {
+          'dist/<%= pkg.name %>.css': ['sass/<%= pkg.name %>.scss']
+        }
+      }
+    },
+
     jscs: {
       options: {
         config: '.jscsrc'
       },
       src: {
-        src: ['Gruntfile.js', 'src/**/*.js', 'test/spec/*.js']
+        src: ['Gruntfile.js', 'js/**/*.js', 'test/spec/*.js']
       }
     },
 
@@ -23,7 +41,7 @@ module.exports = function (grunt) {
         jshintrc: '.jshintrc'
       },
       src: {
-        src: ['Gruntfile.js', 'src/**/*.js', 'test/spec/*.js']
+        src: ['Gruntfile.js', 'js/**/*.js', 'test/spec/*.js']
       }
     },
 
@@ -31,8 +49,8 @@ module.exports = function (grunt) {
       options: {
         csslintrc: '.csslintrc'
       },
-      src: {
-        src: ['src/**/*.css']
+      dist: {
+        src: ['dist/<%= pkg.name %>.css']
       }
     },
 
@@ -57,7 +75,7 @@ module.exports = function (grunt) {
             return [
               connect.static('test'),
               connect().use('/bower_components', connect.static('bower_components')),
-              connect.static('src')
+              connect.static('js')
             ];
           }
         }
@@ -70,17 +88,14 @@ module.exports = function (grunt) {
 
     concat: {
       options: {
-        banner: '/*! <%= pkg.name %> v<%= pkg.version %>' +
-          ' - (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>' +
-          ' - <%= pkg.license.type %>' +
-          ' */\n'
+        banner: '<%= banner %>'
       },
       js: {
-        src: ['src/<%= pkg.name %>.js'],
+        src: ['js/<%= pkg.name %>.js'],
         dest: 'dist/<%= pkg.name %>.js'
       },
       css: {
-        src: ['src/<%= pkg.name %>.css'],
+        src: ['dist/<%= pkg.name %>.css'],
         dest: 'dist/<%= pkg.name %>.css'
       }
     },
@@ -92,7 +107,10 @@ module.exports = function (grunt) {
           'last 2 versions',
           'Firefox ESR',
           'Opera 12.1'
-        ]
+        ],
+        map: {
+          inline: false
+        }
       },
       dist: {
         src: ['dist/<%= pkg.name %>.css'],
@@ -142,9 +160,9 @@ module.exports = function (grunt) {
 
   });
 
-  grunt.registerTask('test', ['jscs', 'jshint', 'csslint', 'connect:test', 'mocha']);
-  grunt.registerTask('build', ['clean', 'concat', 'autoprefixer', 'uglify', 'cssmin']);
-  grunt.registerTask('default', ['test', 'build']);
+  grunt.registerTask('test', ['clean', 'sass', 'csslint', 'jscs', 'jshint', 'connect:test', 'mocha']);
+  grunt.registerTask('build', ['clean', 'sass', 'autoprefixer', 'concat', 'uglify', 'cssmin']);
+  grunt.registerTask('default', ['test', 'autoprefixer', 'concat', 'uglify', 'cssmin']);
 
   grunt.registerTask('release', 'Test, build and bump package.', function (type) {
     grunt.task.run([
