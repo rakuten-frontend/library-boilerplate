@@ -61,7 +61,7 @@ module.exports = function (grunt) {
       },
       test: {
         options: {
-          urls: ['http://localhost:<%= connect.test.options.port %>/']
+          urls: ['http://localhost:<%= connect.test.options.port %>/test/']
         }
       }
     },
@@ -71,13 +71,7 @@ module.exports = function (grunt) {
         options: {
           port: 9001,
           open: false,
-          middleware: function (connect) {
-            return [
-              connect.static('test'),
-              connect().use('/bower_components', connect.static('bower_components')),
-              connect.static('js')
-            ];
-          }
+          base: '.'
         }
       }
     },
