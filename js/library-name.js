@@ -1,4 +1,6 @@
 ;(function () {
   'use strict';
-  // Script here.
+
+  console.log('Hello, "library-name"!');
+
 }());

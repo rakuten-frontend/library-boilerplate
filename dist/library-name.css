@@ -1,4 +1,14 @@
 /*! library-name v0.0.0 - (c) 2015 Author Name - License Type */
-
+.library-content {
+  display: inline-block;
+  padding: 5px 10px;
+  color: #fff;
+  background-color: #c00;
+  background-image: -webkit-linear-gradient(top, #c00, #ea0);
+  background-image: linear-gradient(to bottom, #c00, #ea0);
+}
+.library-content.some-state {
+  text-decoration: underline;
+}
 
 /*# sourceMappingURL=library-name.css.map */
