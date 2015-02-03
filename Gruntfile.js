@@ -3,11 +3,14 @@
 
 module.exports = function (grunt) {
 
+  var pkg = grunt.file.readJSON('package.json');
+  var lastRelease = 'v' + pkg.version;
+
   require('load-grunt-tasks')(grunt);
 
   grunt.initConfig({
 
-    pkg: grunt.file.readJSON('package.json'),
+    pkg: pkg,
 
     banner: '/*! <%= pkg.name %> v<%= pkg.version %>' +
       ' - (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>' +
@@ -165,6 +168,27 @@ module.exports = function (grunt) {
       }
     },
 
+    changelog: {
+      release: {
+        options: {
+          dest: 'CHANGELOG',
+          insertType: 'prepend',
+          after: lastRelease,
+          logArguments: [
+            '--pretty=format:%s',
+            '--no-merges'
+          ],
+          template: 'v<%= pkg.version %>:\n  date: <%= grunt.template.today("yyyy-mm-dd") %>\n{{> features}}',
+          featureRegex: /^(.*)$/gim,
+          partials: {
+            features: '{{#if features}}  changes:\n{{#each features}}{{> feature}}{{/each}}{{else}}{{> empty}}{{/if}}',
+            feature: '    - {{this}}\n',
+            empty: '    - (none)\n'
+          }
+        }
+      }
+    },
+
     'npm-publish': {
       options: {
         abortIfDirty: true
@@ -182,6 +206,7 @@ module.exports = function (grunt) {
       'test',
       'bump-only:' + (type || 'patch'),
       'build',
+      'changelog',
       'bump-commit',
       'npm-publish'
     ]);
