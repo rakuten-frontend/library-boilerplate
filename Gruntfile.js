@@ -215,7 +215,7 @@ module.exports = function (grunt) {
       'test',
       'bump-only:' + (type || 'patch'),
       'build',
-      'changelog:' + lastRelease === 'v0.0.0' ? 'initial' : 'update',
+      'changelog:' + (lastRelease === 'v0.0.0' ? 'initial' : 'update'),
       'bump-commit',
       'npm-publish'
     ]);
