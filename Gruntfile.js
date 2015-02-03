@@ -163,6 +163,12 @@ module.exports = function (grunt) {
         gitDescribeOptions: '--tags --always --abbrev=1 --dirty=-d',
         globalReplace: false
       }
+    },
+
+    'npm-publish': {
+      options: {
+        abortIfDirty: true
+      }
     }
 
   });
@@ -171,12 +177,13 @@ module.exports = function (grunt) {
   grunt.registerTask('build', ['clean', 'sass', 'autoprefixer', 'concat', 'uglify', 'cssmin']);
   grunt.registerTask('default', ['test', 'autoprefixer', 'concat', 'uglify', 'cssmin']);
 
-  grunt.registerTask('release', 'Test, build and bump package.', function (type) {
+  grunt.registerTask('release', 'Release package after test, build and bump.', function (type) {
     grunt.task.run([
       'test',
       'bump-only:' + (type || 'patch'),
       'build',
-      'bump-commit'
+      'bump-commit',
+      'npm-publish'
     ]);
   });
 
