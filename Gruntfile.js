@@ -148,20 +148,42 @@ module.exports = function (grunt) {
       }
     },
 
-    bump: {
+    release: {
       options: {
-        files: ['package.json', 'bower.json'],
-        updateConfigs: ['pkg'],
-        commit: true,
-        commitMessage: 'Release v%VERSION%',
-        commitFiles: ['-a'],
-        createTag: true,
-        tagName: 'v%VERSION%',
-        tagMessage: 'Release v%VERSION%',
-        push: true,
-        pushTo: 'origin',
-        gitDescribeOptions: '--tags --always --abbrev=1 --dirty=-d',
-        globalReplace: false
+        changelogText: '### <%= version %> - <%= grunt.template.today("yyyy-mm-dd") %>\n',
+        file: 'package.json',
+        additionalFiles: ['bower.json'],
+        indentation: '  ',
+        folder: '.',
+        tagName: 'v<%= version %>',
+        commitMessage: 'Release v<%= version %>',
+        tagMessage: 'Release v<%= version %>'
+      },
+      bump: {
+        options: {
+          bump: true,
+          changelog: true,
+          add: false,
+          commit: false,
+          tag: false,
+          push: false,
+          pushTags: false,
+          npm: false,
+          npmtag: false
+        }
+      },
+      commit: {
+        options: {
+          bump: false,
+          changelog: false,
+          add: true,
+          commit: true,
+          tag: true,
+          push: true,
+          pushTags: true,
+          npm: true,
+          npmtag: false
+        }
       }
     }
 
@@ -171,12 +193,13 @@ module.exports = function (grunt) {
   grunt.registerTask('build', ['clean', 'sass', 'autoprefixer', 'concat', 'uglify', 'cssmin']);
   grunt.registerTask('default', ['test', 'autoprefixer', 'concat', 'uglify', 'cssmin']);
 
-  grunt.registerTask('release', 'Test, build and bump package.', function (type) {
+  grunt.registerTask('publish', 'Release package after test, build and bump.', function (type) {
+    type = type || 'patch';
     grunt.task.run([
       'test',
-      'bump-only:' + (type || 'patch'),
+      'release:bump:' + type,
       'build',
-      'bump-commit'
+      'release:commit:' + type
     ]);
   });
 
