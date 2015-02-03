@@ -169,22 +169,31 @@ module.exports = function (grunt) {
     },
 
     changelog: {
-      release: {
+      options: {
+        dest: 'CHANGELOG',
+        insertType: 'prepend',
+        logArguments: [
+          '--pretty=format:%s',
+          '--no-merges'
+        ],
+        template: 'v<%= pkg.version %>:\n  date: <%= grunt.template.today("yyyy-mm-dd") %>\n{{> features}}',
+        featureRegex: /^(.*)$/gim,
+        partials: {
+          features: '{{#if features}}  changes:\n{{#each features}}{{> feature}}{{/each}}{{else}}{{> empty}}{{/if}}',
+          feature: '    - {{this}}\n',
+          empty: '    - (none)\n'
+        }
+      },
+      initial: {
         options: {
-          dest: 'CHANGELOG',
-          insertType: 'prepend',
-          after: lastRelease,
-          logArguments: [
-            '--pretty=format:%s',
-            '--no-merges'
-          ],
-          template: 'v<%= pkg.version %>:\n  date: <%= grunt.template.today("yyyy-mm-dd") %>\n{{> features}}',
-          featureRegex: /^(.*)$/gim,
           partials: {
-            features: '{{#if features}}  changes:\n{{#each features}}{{> feature}}{{/each}}{{else}}{{> empty}}{{/if}}',
-            feature: '    - {{this}}\n',
-            empty: '    - (none)\n'
+            features: '  changes:\n    - Initial release\n',
           }
+        }
+      },
+      update: {
+        options: {
+          after: lastRelease
         }
       }
     },
@@ -206,7 +215,7 @@ module.exports = function (grunt) {
       'test',
       'bump-only:' + (type || 'patch'),
       'build',
-      'changelog',
+      'changelog:' + lastRelease === 'v0.0.0' ? 'initial' : 'update',
       'bump-commit',
       'npm-publish'
     ]);
