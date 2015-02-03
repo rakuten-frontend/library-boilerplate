@@ -14,34 +14,39 @@ module.exports = function (grunt) {
       ' - <%= pkg.license.type %>' +
       ' */\n\n',
 
+    clean: {
+      dist: 'dist'
+    },
+
     sass: {
       options: {
         style: 'expanded',
-        loadPath: ['bower_components'],
+        loadPath: 'bower_components',
         sourcemap: 'auto'
       },
       dist: {
         files: {
-          'dist/<%= pkg.name %>.css': ['sass/<%= pkg.name %>.scss']
+          'dist/<%= pkg.name %>.css': 'sass/<%= pkg.name %>.scss'
         }
       }
     },
 
-    jscs: {
+    autoprefixer: {
       options: {
-        config: '.jscsrc'
+        browsers: [
+          '> 1%',
+          'last 2 versions',
+          'Firefox ESR',
+          'Opera 12.1'
+        ],
+        map: {
+          inline: false
+        }
       },
-      src: {
-        src: ['Gruntfile.js', 'js/**/*.js', 'test/spec/*.js']
-      }
-    },
-
-    jshint: {
-      options: {
-        jshintrc: '.jshintrc'
-      },
-      src: {
-        src: ['Gruntfile.js', 'js/**/*.js', 'test/spec/*.js']
+      dist: {
+        files: {
+          'dist/<%= pkg.name %>.css': 'dist/<%= pkg.name %>.css'
+        }
       }
     },
 
@@ -50,7 +55,37 @@ module.exports = function (grunt) {
         csslintrc: '.csslintrc'
       },
       dist: {
-        src: ['dist/<%= pkg.name %>.css']
+        src: 'dist/<%= pkg.name %>.css'
+      }
+    },
+
+    jscs: {
+      options: {
+        config: '.jscsrc'
+      },
+      grunt: {
+        src: 'Gruntfile.js'
+      },
+      src: {
+        src: 'js/**/*.js'
+      },
+      test: {
+        src: 'test/spec/*.js'
+      }
+    },
+
+    jshint: {
+      options: {
+        jshintrc: '.jshintrc'
+      },
+      grunt: {
+        src: 'Gruntfile.js'
+      },
+      src: {
+        src: 'js/**/*.js'
+      },
+      test: {
+        src: 'test/spec/*.js'
       }
     },
 
@@ -76,39 +111,28 @@ module.exports = function (grunt) {
       }
     },
 
-    clean: {
-      dist: ['dist']
-    },
-
     concat: {
       options: {
         banner: '<%= banner %>'
       },
-      js: {
-        src: ['js/<%= pkg.name %>.js'],
-        dest: 'dist/<%= pkg.name %>.js'
-      },
       css: {
         src: ['dist/<%= pkg.name %>.css'],
         dest: 'dist/<%= pkg.name %>.css'
+      },
+      js: {
+        src: ['js/<%= pkg.name %>.js'],
+        dest: 'dist/<%= pkg.name %>.js'
       }
     },
 
-    autoprefixer: {
-      options: {
-        browsers: [
-          '> 1%',
-          'last 2 versions',
-          'Firefox ESR',
-          'Opera 12.1'
-        ],
-        map: {
-          inline: false
-        }
-      },
+    cssmin: {
       dist: {
-        src: ['dist/<%= pkg.name %>.css'],
-        dest: 'dist/<%= pkg.name %>.css'
+        options: {
+          keepSpecialComments: '*'
+        },
+        files: {
+          'dist/<%= pkg.name %>.min.css': 'dist/<%= pkg.name %>.css'
+        }
       }
     },
 
@@ -119,18 +143,7 @@ module.exports = function (grunt) {
           preserveComments: 'some'
         },
         files: {
-          'dist/<%= pkg.name %>.min.js': ['dist/<%= pkg.name %>.js']
-        }
-      }
-    },
-
-    cssmin: {
-      dist: {
-        options: {
-          keepSpecialComments: '*'
-        },
-        files: {
-          'dist/<%= pkg.name %>.min.css': ['dist/<%= pkg.name %>.css']
+          'dist/<%= pkg.name %>.min.js': 'dist/<%= pkg.name %>.js'
         }
       }
     },
