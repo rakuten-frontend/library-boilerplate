@@ -187,7 +187,7 @@ module.exports = function (grunt) {
       initial: {
         options: {
           partials: {
-            features: '  changes:\n    - Initial release\n',
+            features: '  changes:\n    - Initial release',
           }
         }
       },
