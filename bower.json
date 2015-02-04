@@ -10,7 +10,8 @@
   "keywords": [],
   "main": [
     "dist/library-name.js",
-    "dist/library-name.css"
+    "dist/library-name.css",
+    "sass/library-name.scss"
   ],
   "ignore": [
     "**/.*",
