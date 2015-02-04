@@ -35,6 +35,7 @@
   "devDependencies": {
     "grunt": "^0.4.5",
     "grunt-autoprefixer": "^2.2.0",
+    "grunt-build-control": "^0.3.0",
     "grunt-bump": "0.0.17",
     "grunt-changelog": "^0.3.0",
     "grunt-contrib-clean": "^0.6.0",

@@ -151,6 +151,18 @@ module.exports = function (grunt) {
       }
     },
 
+    buildcontrol: {
+      docs: {
+        options: {
+          dir: 'docs',
+          branch: 'gh-pages',
+          commit: true,
+          push: true,
+          message: 'Built %sourceName% from commit %sourceCommit% on branch %sourceBranch%'
+        }
+      }
+    },
+
     bump: {
       options: {
         files: ['package.json', 'bower.json'],
@@ -217,7 +229,8 @@ module.exports = function (grunt) {
       'build',
       'changelog:' + (lastRelease === 'v0.0.0' ? 'initial' : 'update'),
       'bump-commit',
-      'npm-publish'
+      'npm-publish',
+      'buildcontrol'
     ]);
   });
 
