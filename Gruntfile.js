@@ -18,7 +18,8 @@ module.exports = function (grunt) {
       ' */\n\n',
 
     clean: {
-      dist: 'dist'
+      dist: 'dist',
+      docs: ['docs/api']
     },
 
     sass: {
@@ -151,6 +152,15 @@ module.exports = function (grunt) {
       }
     },
 
+    jsdoc: {
+      docs: {
+        options: {
+          destination: 'docs/api'
+        },
+        src: 'js/**/*.js'
+      }
+    },
+
     buildcontrol: {
       docs: {
         options: {
@@ -218,8 +228,9 @@ module.exports = function (grunt) {
 
   });
 
-  grunt.registerTask('test', ['clean', 'sass', 'csslint', 'jscs', 'jshint', 'connect:test', 'mocha']);
-  grunt.registerTask('build', ['clean', 'sass', 'autoprefixer', 'concat', 'uglify', 'cssmin']);
+  grunt.registerTask('test', ['clean:dist', 'sass', 'csslint', 'jscs', 'jshint', 'connect:test', 'mocha']);
+  grunt.registerTask('build', ['clean:dist', 'sass', 'autoprefixer', 'concat', 'uglify', 'cssmin']);
+  grunt.registerTask('docs', ['clean:docs', 'jsdoc']);
   grunt.registerTask('default', ['test', 'autoprefixer', 'concat', 'uglify', 'cssmin']);
 
   grunt.registerTask('release', 'Release package after test, build and bump.', function (type) {
@@ -230,6 +241,7 @@ module.exports = function (grunt) {
       'changelog:' + (lastRelease === 'v0.0.0' ? 'initial' : 'update'),
       'bump-commit',
       'npm-publish',
+      'docs',
       'buildcontrol'
     ]);
   });
