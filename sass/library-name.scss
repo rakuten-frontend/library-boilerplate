@@ -1,4 +1,18 @@
-.library-content {
+// Some component
+//
+// Description of the component here.
+//
+// Styleguide 1
+
+// States
+//
+// .some-state - Component with some state.
+//
+// Markup:
+// <div class="library-component {$modifiers}">Component</div>
+//
+// Styleguide 1.1
+.library-component {
   display: inline-block;
   padding: 5px 10px;
   color: #fff;

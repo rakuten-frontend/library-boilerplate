@@ -19,7 +19,7 @@ module.exports = function (grunt) {
 
     clean: {
       dist: 'dist',
-      docs: ['docs/api']
+      docs: ['docs/styleguide', 'docs/api']
     },
 
     sass: {
@@ -152,6 +152,17 @@ module.exports = function (grunt) {
       }
     },
 
+    kss: {
+      docs: {
+        options: {
+          css: 'dist/<%= pkg.name %>.css'
+        },
+        files: {
+          'docs/styleguide': 'sass'
+        }
+      }
+    },
+
     jsdoc: {
       docs: {
         options: {
@@ -230,7 +241,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('test', ['clean:dist', 'sass', 'csslint', 'jscs', 'jshint', 'connect:test', 'mocha']);
   grunt.registerTask('build', ['clean:dist', 'sass', 'autoprefixer', 'concat', 'uglify', 'cssmin']);
-  grunt.registerTask('docs', ['clean:docs', 'jsdoc']);
+  grunt.registerTask('docs', ['clean:docs', 'kss', 'jsdoc']);
   grunt.registerTask('default', ['test', 'autoprefixer', 'concat', 'uglify', 'cssmin']);
 
   grunt.registerTask('release', 'Release package after test, build and bump.', function (type) {

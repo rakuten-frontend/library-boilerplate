@@ -1,6 +1,6 @@
 /*! library-name v0.0.0 - (c) 2015 Author Name - License Type */
 
-.library-content {
+.library-component {
   display: inline-block;
   padding: 5px 10px;
   color: #fff;
@@ -8,7 +8,7 @@
   background-image: -webkit-linear-gradient(top, #c00, #ea0);
   background-image: linear-gradient(to bottom, #c00, #ea0);
 }
-.library-content.some-state {
+.library-component.some-state {
   text-decoration: underline;
 }
 
