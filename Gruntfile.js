@@ -161,7 +161,8 @@ module.exports = function (grunt) {
     kss: {
       docs: {
         options: {
-          css: 'dist/<%= pkg.name %>.css'
+          css: '../../dist/<%= pkg.name %>.css',
+          js: '../../dist/<%= pkg.name %>.js'
         },
         files: {
           'docs/styleguide': 'sass'
