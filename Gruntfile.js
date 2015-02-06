@@ -126,6 +126,9 @@ module.exports = function (grunt) {
         banner: '<%= banner %>'
       },
       css: {
+        options: {
+          sourceMap: true
+        },
         src: ['dist/<%= pkg.name %>.css'],
         dest: 'dist/<%= pkg.name %>.css'
       },
