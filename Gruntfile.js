@@ -19,6 +19,7 @@ module.exports = function (grunt) {
 
     clean: {
       dist: 'dist',
+      tmp: 'tmp',
       docs: ['docs/styleguide', 'docs/api']
     },
 
@@ -31,6 +32,11 @@ module.exports = function (grunt) {
       dist: {
         files: {
           'dist/<%= pkg.name %>.css': 'sass/<%= pkg.name %>.scss'
+        }
+      },
+      test: {
+        files: {
+          'tmp/<%= pkg.name %>.css': 'sass/<%= pkg.name %>.scss'
         }
       }
     },
@@ -58,8 +64,8 @@ module.exports = function (grunt) {
       options: {
         csslintrc: '.csslintrc'
       },
-      dist: {
-        src: 'dist/<%= pkg.name %>.css'
+      test: {
+        src: 'tmp/<%= pkg.name %>.css'
       }
     },
 
@@ -239,10 +245,10 @@ module.exports = function (grunt) {
 
   });
 
-  grunt.registerTask('test', ['clean:dist', 'sass', 'csslint', 'jscs', 'jshint', 'connect:test', 'mocha']);
-  grunt.registerTask('build', ['clean:dist', 'sass', 'autoprefixer', 'concat', 'uglify', 'cssmin']);
+  grunt.registerTask('test', ['clean:tmp', 'sass:test', 'csslint', 'jscs', 'jshint', 'connect:test', 'mocha']);
+  grunt.registerTask('build', ['clean:dist', 'sass:dist', 'autoprefixer', 'concat', 'uglify', 'cssmin']);
   grunt.registerTask('docs', ['clean:docs', 'kss', 'jsdoc']);
-  grunt.registerTask('default', ['test', 'autoprefixer', 'concat', 'uglify', 'cssmin']);
+  grunt.registerTask('default', ['test', 'build', 'docs']);
 
   grunt.registerTask('release', 'Release package after test, build and bump.', function (type) {
     grunt.task.run([
@@ -250,10 +256,10 @@ module.exports = function (grunt) {
       'bump-only:' + (type || 'patch'),
       'build',
       'changelog:' + (lastRelease === 'v0.0.0' ? 'initial' : 'update'),
-      'bump-commit',
-      'npm-publish',
       'docs',
-      'buildcontrol'
+      'bump-commit',
+      'buildcontrol',
+      'npm-publish'
     ]);
   });
 
