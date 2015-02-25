@@ -213,24 +213,25 @@ module.exports = function (grunt) {
 
     changelog: {
       options: {
-        dest: 'CHANGELOG',
+        dest: 'CHANGELOG.md',
         insertType: 'prepend',
         logArguments: [
           '--pretty=format:%s',
           '--no-merges'
         ],
-        template: 'v<%= pkg.version %>:\n  date: <%= grunt.template.today("yyyy-mm-dd") %>\n{{> features}}',
+        fileHeader: '# Changelog',
+        template: '## <%= pkg.version %> (<%= grunt.template.today("yyyy-mm-dd") %>)\n{{> features}}',
         featureRegex: /^(.*)$/gim,
         partials: {
-          features: '{{#if features}}  changes:\n{{#each features}}{{> feature}}{{/each}}{{else}}{{> empty}}{{/if}}',
-          feature: '    - {{this}}\n',
-          empty: '    - (none)\n'
+          features: '{{#if features}}{{#each features}}{{> feature}}{{/each}}{{else}}{{> empty}}{{/if}}',
+          feature: '- {{this}}\n',
+          empty: '- (none)\n'
         }
       },
       initial: {
         options: {
           partials: {
-            features: '  changes:\n    - Initial release',
+            features: '- Initial release',
           }
         }
       },
